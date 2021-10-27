@@ -25,6 +25,11 @@ feishualert_botid:
 feishualert_title:
   "test"
 
+# 这个时间段内的匹配将不告警，适用于某些时间段请求低谷避免误报警
+feishualert_skip:
+  start: "01:00:00"
+  end: "09:00:00"
+
 # 告警内容
 # 使用{}可匹配matches
 # 如匹配到的es数据为{"host":"aa.com","ip":"127.0.0.1"}

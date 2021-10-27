@@ -32,6 +32,7 @@ class FeishuAlert(Alerter):
         self.body = self.rule.get("feishualert_body", "")
         self.rule["feishualert_time"] = time.strftime(
             "%Y-%m-%d %H:%M:%S", time.localtime())
+        self.skip = self.rule.get("feishualert_skip", {})
         if self.bot_id == "" or self.title == "" or self.body == "":
             raise EAException("Configure botid|title|body is invalid")
 
@@ -44,6 +45,12 @@ class FeishuAlert(Alerter):
         return self.rule
 
     def alert(self, matches):
+        now = time.strftime("%H:%M:%S", time.localtime())
+        if "start" in self.skip and "end" in self.skip:
+            if self.skip["start"] <= now and self.skip["end"] >= now:
+                print("Skip match in silence time...")
+                return
+
         headers = {
             "Content-Type": "application/json;",
         }

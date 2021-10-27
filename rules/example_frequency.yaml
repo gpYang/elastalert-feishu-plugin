@@ -59,6 +59,11 @@ feishualert_botid:
 feishualert_title:
   "test"
 
+# skip time
+feishualert_skip:
+  start: "01:00:00"
+  end: "09:00:00"
+
 # content
 feishualert_body:
   "
