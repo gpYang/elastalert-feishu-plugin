@@ -30,8 +30,6 @@ class FeishuAlert(Alerter):
         self.bot_id = self.rule.get("feishualert_botid", "")
         self.title = self.rule.get("feishualert_title", "")
         self.body = self.rule.get("feishualert_body", "")
-        self.rule["feishualert_time"] = time.strftime(
-            "%Y-%m-%d %H:%M:%S", time.localtime())
         self.skip = self.rule.get("feishualert_skip", {})
         if self.bot_id == "" or self.title == "" or self.body == "":
             raise EAException("Configure botid|title|body is invalid")
@@ -64,6 +62,8 @@ class FeishuAlert(Alerter):
 
         if len(matches) > 0:
             try:
+                self.rule["feishualert_time"] = time.strftime(
+                    "%Y-%m-%d %H:%M:%S", time.localtime())
                 merge = dict(**matches[0], **self.rule)
                 body["content"]["text"] = self.body.format(**merge)
             except Exception as e:
